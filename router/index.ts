@@ -26,3 +26,7 @@ router.get('/car-histories', authorize, checkAccess(['admin', 'superadmin']), Ca
 // open api
 router.use('/api-docs', swaggerui.serve);
 router.get('/api-docs', swaggerui.setup(swaggerDocument));
+router.get('/api-docs.json', (req, res) => {
+    res.setHeader('Content-Type', 'application/json');
+    res.send(swaggerDocument);
+})
