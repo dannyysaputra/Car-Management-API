@@ -1,5 +1,6 @@
 import express, { Express, Request, Response } from "express";
 import dotenv from "dotenv";
+import cors from "cors";
 import { router } from "./router";
 import knexInstance from "./database";
 import { Model } from 'objection';
@@ -15,6 +16,7 @@ const port = process.env.PORT || 3000;
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
+app.use(cors());
 app.use('/api/v1', router);
 
 // routing
