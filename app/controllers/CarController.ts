@@ -1,6 +1,7 @@
 import { Request, Response } from 'express';
 import { CarService } from '../services/CarService';
 import cloudinary from '../middleware/cloudinary';
+import { CarType } from '../models/CarModel';
 
 const carService = new CarService();
 
@@ -16,12 +17,26 @@ export class CarController {
   }
 
   public static async store(req: Request, res: Response): Promise<Response> {
-    const { name, price }: { name: string, price: number } = req.body;
+    const { 
+      plate, 
+      manufacture, 
+      model, 
+      rentPerDay, 
+      capacity, 
+      description, 
+      transmission, 
+      type, 
+      year, 
+      options, 
+      specs, 
+      availableAt 
+    }: CarType = req.body;
+    
     const file = req.file;
     const userId = req.user?.id;
 
-    if (!name || !price || !file) {
-      return res.status(400).json({ status: "Failed", message: 'Name, price, and image are required' });
+    if (!plate || !manufacture || !model || !rentPerDay || !capacity || !description || !transmission || !type || !year || !options || !specs || !availableAt || !file) {
+      return res.status(400).json({ status: "Failed", message: 'All fields are required' });
     }
 
     try {
@@ -33,7 +48,21 @@ export class CarController {
         return res.status(500).json({ status: "Failed", message: 'Cannot retrieve image from Cloudinary' });
       }
 
-      const newCar = await carService.createCar({ name, price }, imageUrl, userId);
+      const newCar = await carService.createCar({ 
+        plate, 
+        manufacture, 
+        model, 
+        rentPerDay, 
+        capacity, 
+        description, 
+        transmission, 
+        type, 
+        year, 
+        options, 
+        specs, 
+        availableAt 
+      }, imageUrl, userId);
+
       return res.status(201).json({ status: "Success", message: 'Store car successfully', data: newCar });
     } catch (error) {
       console.error('Error storing car:', error);
@@ -43,7 +72,20 @@ export class CarController {
 
   public static async update(req: Request, res: Response): Promise<Response> {
     const { id } = req.params;
-    const { name, price }: { name: string, price: number } = req.body;
+    const { 
+      plate, 
+      manufacture, 
+      model, 
+      rentPerDay, 
+      capacity, 
+      description, 
+      transmission, 
+      type, 
+      year, 
+      options, 
+      specs, 
+      availableAt 
+    }: CarType = req.body;
     const file = req.file;
     const userId = req.user?.id;
 
@@ -60,7 +102,20 @@ export class CarController {
         }
       }
 
-      const car = await carService.updateCar(id, { name, price }, imageUrl, userId);
+      const car = await carService.updateCar(id, { 
+        plate, 
+        manufacture, 
+        model, 
+        rentPerDay, 
+        capacity, 
+        description, 
+        transmission, 
+        type, 
+        year, 
+        options, 
+        specs, 
+        availableAt 
+      }, imageUrl, userId);
 
       if (!car) {
         return res.status(404).json({ status: "Failed", message: "Car not found" });  

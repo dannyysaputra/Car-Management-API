@@ -30,6 +30,7 @@ export class UserController {
           email: user.email,
           name: user.name,
           token,
+          role: user.role,
           createdAt: user.created_at,
           updatedAt: user.updated_at
         }
@@ -47,6 +48,14 @@ export class UserController {
     const { name, email, password, avatar } = req.body;
 
     try {
+      const foundUser = await userService.findUserByEmail(email);
+
+      if (foundUser) {
+        return res.status(404).json({
+          status: 'Failed',
+          message: 'User already exists'
+        })
+      }
       const user = await userService.registerUser({ name, email, password, avatar, role: 'user' });
 
       return res.status(201).json({
