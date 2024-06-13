@@ -13,6 +13,7 @@ export async function up(knex: Knex): Promise<void> {
         table.text('description').notNullable();
         table.string('transmission', 255).notNullable();
         table.string('type', 255).notNullable();
+        table.string('typeDriver', 255).notNullable();
         table.integer('year').notNullable();
         table.specificType('options', 'text ARRAY').notNullable();
         table.specificType('specs', 'text ARRAY').notNullable();

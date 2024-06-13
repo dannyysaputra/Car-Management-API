@@ -22,6 +22,12 @@ interface Car {
 }
 
 export async function seed(knex: Knex): Promise<void> {
+  function getRandomInt(min: number, max: number): number {
+    min = Math.ceil(min);
+    max = Math.floor(max);
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+  }
+
   try {
     // Deletes ALL existing entries
     // await knex('cars').del();
@@ -36,6 +42,13 @@ export async function seed(knex: Knex): Promise<void> {
     // Upload images to Cloudinary and format the data for insertion
     const formattedCars = await Promise.all(cars.map(async car => {
       try {
+        const isPositive = getRandomInt(0, 1) === 1;
+        const timeAt = new Date();
+        const mutator = getRandomInt(1000000, 100000000);
+
+        const availableAt = new Date(timeAt.getTime() + (isPositive ? mutator : -1 * mutator))
+        const typeDriver = isPositive ? 'dengan-sopir' : 'tanpa-sopir';
+
         const result = await cloudinary.uploader.upload(car.image, { folder: 'cars' });
         const imageUrl = result.secure_url;
 
@@ -67,10 +80,11 @@ export async function seed(knex: Knex): Promise<void> {
           year: car.year,
           options: optionsPGFormat,  // Convert array to JSON string
           specs: specsPGFormat,      // Convert array to JSON string
-          availableAt: new Date(car.availableAt),
+          availableAt: availableAt,
+          typeDriver: typeDriver,
           available: car.available,
-          created_by: '46f5ff40-701e-4650-b110-dcc9d16cb1a7',
-          updated_by: '46f5ff40-701e-4650-b110-dcc9d16cb1a7',
+          created_by: '1f0da32d-4e44-437e-9a9a-d0f4044db615',
+          updated_by: '1f0da32d-4e44-437e-9a9a-d0f4044db615',
           deleted_by: null,
           created_at: new Date(),
           updated_at: new Date()

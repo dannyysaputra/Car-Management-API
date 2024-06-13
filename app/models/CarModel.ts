@@ -10,6 +10,7 @@ export type CarType = {
     capacity: number;
     description: string;
     transmission: string;
+    typeDriver: string;
     type: string;
     year: number;
     options: string[];
@@ -35,6 +36,7 @@ export class CarModel extends BaseModel {
     capacity!: number;
     description!: string;
     transmission!: string;
+    typeDriver!: string;
     type!: string;
     year!: number;
     options!: string[];

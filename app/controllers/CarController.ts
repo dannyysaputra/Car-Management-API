@@ -26,6 +26,7 @@ export class CarController {
       description, 
       transmission, 
       type, 
+      typeDriver, 
       year, 
       options, 
       specs, 
@@ -35,7 +36,7 @@ export class CarController {
     const file = req.file;
     const userId = req.user?.id;
 
-    if (!plate || !manufacture || !model || !rentPerDay || !capacity || !description || !transmission || !type || !year || !options || !specs || !availableAt || !file) {
+    if (!plate || !manufacture || !model || !rentPerDay || !capacity || !description || !transmission || !type ||  !typeDriver || !year || !options || !specs || !availableAt || !file) {
       return res.status(400).json({ status: "Failed", message: 'All fields are required' });
     }
 
@@ -57,6 +58,7 @@ export class CarController {
         description, 
         transmission, 
         type, 
+        typeDriver, 
         year, 
         options, 
         specs, 
@@ -81,6 +83,7 @@ export class CarController {
       description, 
       transmission, 
       type, 
+      typeDriver, 
       year, 
       options, 
       specs, 
@@ -111,6 +114,7 @@ export class CarController {
         description, 
         transmission, 
         type, 
+        typeDriver, 
         year, 
         options, 
         specs, 
