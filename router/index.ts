@@ -17,7 +17,8 @@ router.get('/whoami', authorize, UserController.whoAmI);
 
 // Cars
 router.post('/cars', authorize, checkAccess(['admin', 'superadmin']), upload.single('image'), CarController.store);
-router.get('/cars', authorize, CarController.getCars);
+router.get('/cars', CarController.getCars);
+router.get('/cars/:id', authorize, checkAccess(['admin', 'superadmin']), CarController.getCarById);
 router.put('/cars/:id', authorize, checkAccess(['admin', 'superadmin']), upload.single('image'), CarController.update);
 router.delete('/cars/:id', authorize, checkAccess(['admin', 'superadmin']), CarController.deleteCar);
 

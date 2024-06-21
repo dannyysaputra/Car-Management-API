@@ -16,6 +16,17 @@ export class CarController {
     }
   }
 
+  public static async getCarById(req: Request, res: Response): Promise<Response> {
+    const { id } = req.params;
+    try {
+      const cars = await carService.getCarById(id);
+      return res.status(200).json({  status: "Success", message: "Car found", data: cars });
+    } catch (error) {
+      console.error("Error fetching cars:", error);
+      return res.status(500).json({ message: "Internal Server Error" });
+    }
+  }
+
   public static async store(req: Request, res: Response): Promise<Response> {
     const { 
       plate, 
@@ -28,15 +39,26 @@ export class CarController {
       type, 
       typeDriver, 
       year, 
-      options, 
-      specs, 
+      available,
       availableAt 
     }: CarType = req.body;
-    
+
+    const rawOptions: string = req.body.options; // Misalnya, "['Option1', 'Option2']"
+    const rawSpecs: string = req.body.specs; // Misalnya, "['Spec1', 'Spec2']"
+
+    // Menghapus tanda kutip dan mengonversi ke array
+    const options = JSON.parse(rawOptions.replace(/'/g, '"'));
+    const specs = JSON.parse(rawSpecs.replace(/'/g, '"'));
+
     const file = req.file;
     const userId = req.user?.id;
 
-    if (!plate || !manufacture || !model || !rentPerDay || !capacity || !description || !transmission || !type ||  !typeDriver || !year || !options || !specs || !availableAt || !file) {
+    console.log('body: ', req.body);
+    console.log('options', options);
+    console.log('options', specs);
+    
+
+    if (!plate || !manufacture || !model || !rentPerDay || !capacity || !description || !transmission || !type ||  !typeDriver || !year || !options || !specs || !available || !availableAt || !file) {
       return res.status(400).json({ status: "Failed", message: 'All fields are required' });
     }
 
@@ -62,7 +84,8 @@ export class CarController {
         year, 
         options, 
         specs, 
-        availableAt 
+        availableAt,
+        available
       }, imageUrl, userId);
 
       return res.status(201).json({ status: "Success", message: 'Store car successfully', data: newCar });
@@ -85,12 +108,17 @@ export class CarController {
       type, 
       typeDriver, 
       year, 
-      options, 
-      specs, 
       availableAt 
     }: CarType = req.body;
     const file = req.file;
     const userId = req.user?.id;
+
+    const rawOptions: string = req.body.options; // Misalnya, "['Option1', 'Option2']"
+    const rawSpecs: string = req.body.specs; // Misalnya, "['Spec1', 'Spec2']"
+
+    // Menghapus tanda kutip dan mengonversi ke array
+    const options = JSON.parse(rawOptions.replace(/'/g, '"'));
+    const specs = JSON.parse(rawSpecs.replace(/'/g, '"'));
 
     try {
       let imageUrl: string | undefined;
