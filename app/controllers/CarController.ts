@@ -22,8 +22,7 @@ export class CarController {
       const cars = await carService.getCarById(id);
       return res.status(200).json({  status: "Success", message: "Car found", data: cars });
     } catch (error) {
-      console.error("Error fetching cars:", error);
-      return res.status(500).json({ message: "Internal Server Error" });
+      return res.status(404).json({ status: 'Failed', message: "Internal Server Error" });
     }
   }
 
@@ -53,9 +52,8 @@ export class CarController {
     const file = req.file;
     const userId = req.user?.id;
 
-    console.log('body: ', req.body);
-    console.log('options', options);
-    console.log('options', specs);
+    // console.log('body: ', req.body);
+    // console.log('files: ', file);
     
 
     if (!plate || !manufacture || !model || !rentPerDay || !capacity || !description || !transmission || !type ||  !typeDriver || !year || !options || !specs || !available || !availableAt || !file) {

@@ -5,6 +5,10 @@ import configs from '../knexfile';
 // inisialisasi knex
 const environment = process.env.NODE_ENV || 'development';
 const knexConfig = configs[environment];
+
+// console.log(environment);
+// console.log(knexConfig);
+
 const knexInstance = Knex(knexConfig);
 
 // inisialisasi objection.js dengan knex

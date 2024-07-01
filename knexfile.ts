@@ -1,9 +1,8 @@
-require("dotenv").config()
 import type { Knex } from 'knex';
 
-const environments: string[] = ['development', 'staging', 'production'];
+const environments: string[] = ['development', 'staging', 'production', 'test'];
 
-const connection: Knex.ConnectionConfig = {
+const connection: Knex.ConnectionConfig = { 
     host: process.env.DB_HOST as string,
     database: process.env.DB_NAME as string,
     user: process.env.DB_USER as string,

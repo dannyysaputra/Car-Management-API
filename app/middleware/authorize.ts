@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Request, Response, NextFunction } from "express";
 import jwt from "jsonwebtoken";
 import { UserModel } from "../models/UserModel";
@@ -13,7 +14,7 @@ export async function authorize(req: any, res: Response, next: NextFunction) {
 
         next();
     } catch (err) {
-        res.status(401).json({ message: "unauthotized" })
+        res.status(401).json({ message: "unauthotized" })   
     }
 }
 
