@@ -23,30 +23,30 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">41.37% </span>
+                <span class="strong">57.47% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>36/87</span>
+                <span class='fraction'>50/87</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">100% </span>
+                <span class="strong">66.66% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>3/3</span>
+                <span class='fraction'>4/6</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">42.85% </span>
+                <span class="strong">57.14% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>3/7</span>
+                <span class='fraction'>4/7</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">41.37% </span>
+                <span class="strong">57.47% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>36/87</span>
+                <span class='fraction'>50/87</span>
             </div>
         
             
@@ -61,7 +61,7 @@
             </div>
         </template>
     </div>
-    <div class='status-line low'></div>
+    <div class='status-line medium'></div>
     <pre><table class="coverage">
 <tr><td class="line-count quiet"><a name='L1'></a><a href='#L1'>1</a>
 <a name='L2'></a><a href='#L2'>2</a>
@@ -166,6 +166,8 @@
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-yes">3x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
@@ -183,28 +185,26 @@
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-no">&nbsp;</span>
@@ -269,29 +269,29 @@ export class CarService {
     return newCar;
   }
 &nbsp;
-  public async <span class="fstat-no" title="function not covered" >updateCar(id: string, data: Partial&lt;CarType&gt;, image?: string, userId?: string): Promise&lt;CarType | undefined&gt; {</span>
-<span class="cstat-no" title="statement not covered" >    const updateData: Partial&lt;CarType&gt; = { ...data };</span>
-<span class="cstat-no" title="statement not covered" ></span>
-<span class="cstat-no" title="statement not covered" >    if (image) {</span>
-<span class="cstat-no" title="statement not covered" >      updateData.image = image;</span>
-<span class="cstat-no" title="statement not covered" >    }</span>
-<span class="cstat-no" title="statement not covered" >    if (userId) {</span>
+  public async updateCar(id: string, data: Partial&lt;CarType&gt;, image?: string, userId?: string): Promise&lt;CarType | undefined&gt; {
+    const updateData: Partial&lt;CarType&gt; = { ...data };
+&nbsp;
+    if (image) {
+      updateData.image = image;
+    }
+    if (userId) <span class="branch-0 cbranch-no" title="branch not covered" >{</span>
 <span class="cstat-no" title="statement not covered" >      updateData.updated_by = userId;</span>
 <span class="cstat-no" title="statement not covered" >    }</span>
-<span class="cstat-no" title="statement not covered" >    updateData.updated_at = new Date();</span>
-<span class="cstat-no" title="statement not covered" ></span>
-<span class="cstat-no" title="statement not covered" >    const updatedCar = await this.carRepository.updateCar(id, updateData);</span>
-<span class="cstat-no" title="statement not covered" ></span>
-<span class="cstat-no" title="statement not covered" >    if (updatedCar &amp;&amp; userId) {</span>
+    updateData.updated_at = new Date();
+&nbsp;
+    const updatedCar = await this.carRepository.updateCar(id, updateData);
+&nbsp;
+    if (updatedCar &amp;&amp; userId) <span class="branch-0 cbranch-no" title="branch not covered" >{</span>
 <span class="cstat-no" title="statement not covered" >      await this.carRepository.createCarHistory({</span>
 <span class="cstat-no" title="statement not covered" >        car_id: updatedCar.id,</span>
 <span class="cstat-no" title="statement not covered" >        user_id: userId,</span>
 <span class="cstat-no" title="statement not covered" >        action: 'updated'</span>
 <span class="cstat-no" title="statement not covered" >      });</span>
 <span class="cstat-no" title="statement not covered" >    }</span>
-<span class="cstat-no" title="statement not covered" ></span>
-<span class="cstat-no" title="statement not covered" >    return updatedCar;</span>
-<span class="cstat-no" title="statement not covered" >  } </span>
+&nbsp;
+    return updatedCar;
+  } 
 &nbsp;
   public async <span class="fstat-no" title="function not covered" >deleteCar(id: string, userId: string): Promise&lt;number&gt; {</span>
 <span class="cstat-no" title="statement not covered" >    const trx = await this.carRepository.startTransaction();</span>
@@ -331,7 +331,7 @@ export class CarService {
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2024-07-01T12:47:13.075Z
+                at 2024-07-05T09:53:37.144Z
             </div>
         <script src="../prettify.js"></script>
         <script>

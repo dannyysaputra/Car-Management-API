@@ -108,17 +108,24 @@ export class CarController {
       year, 
       availableAt 
     }: CarType = req.body;
-    const file = req.file;
-    const userId = req.user?.id;
-
-    const rawOptions: string = req.body.options; // Misalnya, "['Option1', 'Option2']"
-    const rawSpecs: string = req.body.specs; // Misalnya, "['Spec1', 'Spec2']"
-
-    // Menghapus tanda kutip dan mengonversi ke array
-    const options = JSON.parse(rawOptions.replace(/'/g, '"'));
-    const specs = JSON.parse(rawSpecs.replace(/'/g, '"'));
-
+    
     try {
+      const carExist = await carService.getCarById(id);
+      if (!carExist) {
+        return res.status(404).json({ status: "Failed", message: "Car not found" });  
+      }
+
+      const file = req.file;
+      const userId = req.user?.id;
+
+      const rawOptions: string = req.body.options; // Misalnya, "['Option1', 'Option2']"
+      const rawSpecs: string = req.body.specs; // Misalnya, "['Spec1', 'Spec2']"
+
+      console.log(req.body);
+
+      // Menghapus tanda kutip dan mengonversi ke array
+      const options = JSON.parse(rawOptions.replace(/'/g, '"'));
+      const specs = JSON.parse(rawSpecs.replace(/'/g, '"'));
       let imageUrl: string | undefined;
 
       if (file) {
@@ -146,10 +153,6 @@ export class CarController {
         specs, 
         availableAt 
       }, imageUrl, userId);
-
-      if (!car) {
-        return res.status(404).json({ status: "Failed", message: "Car not found" });  
-      }
 
       return res.status(201).json({ status: "Success", message: "Car successfully updated", data: car });
     } catch (error) {

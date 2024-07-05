@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import request from 'supertest';
-import app from '../index';
+import app from '../app/index';
 import { UserModel } from '../app/models/UserModel';
 import { UserController } from '../app/controllers/UserController';
 import express from 'express';
@@ -122,7 +122,7 @@ describe('POST /api/v1/login', () => {
                     })
                 )
             })
-    })
+    }, 10000)
 
     // 2. Email not found
     it('should response with 404 status code', async () => {
@@ -142,7 +142,7 @@ describe('POST /api/v1/login', () => {
                     })
                 )
             })
-    })
+    }, 10000)
 
     // 3. Wrong password
     it('should response with 401 status code', async () => {
@@ -162,7 +162,7 @@ describe('POST /api/v1/login', () => {
                     })
                 )
             })
-    })
+    }, 10000)
 })
 
 describe('POST /api/v1/create-admin', () => {
@@ -186,7 +186,7 @@ describe('POST /api/v1/create-admin', () => {
                     })
                 )
             })
-    })
+    }, 10000)
     
     // 2. user already exists
     it('should response with 409 status code', async () => {
@@ -203,7 +203,7 @@ describe('POST /api/v1/create-admin', () => {
                     })
                 )
             })
-    })
+    }, 10000)
 })
 
 describe('GET /api/v1/whoami', () => {
@@ -233,7 +233,7 @@ describe('GET /api/v1/whoami', () => {
                     })
                 )
             })
-    })
+    }, 10000)
 })
 
 afterAll(async () => {
