@@ -24,6 +24,9 @@ jobs:
             echo DB_USER=${{ secrets.DB_USER }} >> .env.test
             echo DB_PASSWORD=${{ secrets.DB_PASSWORD }} >> .env.test
             echo DB_PORT=${{ secrets.DB_PORT }} >> .env.test
+            echo CLOUD_NAME=${{ secrets.CLOUD_NAME }} >> .env.test
+            echo API_KEY=${{ secrets.API_KEY }} >> .env.test
+            echo API_SECRET=${{ secrets.API_SECRET }} >> .env.test
         - run: npm ci
         - run: npm run lint
         - run: npm test
