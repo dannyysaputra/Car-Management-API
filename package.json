@@ -7,7 +7,7 @@
     "start": "cross-env NODE_ENV=production node ./build/bin/www",
     "test": "cross-env NODE_ENV=test jest",
     "dev": "cross-env NODE_ENV=development ts-node-dev --respawn --transpile-only ./bin/www",
-    "lint": "eslint",
+    "lint": "eslint ./app ./database",
     "build": "tsc"
   },  
   "keywords": [],
