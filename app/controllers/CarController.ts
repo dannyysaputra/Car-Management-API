@@ -52,8 +52,6 @@ export class CarController {
     const file = req.file;
     const userId = req.user?.id;
 
-    // console.log('body: ', req.body);
-    // console.log('files: ', file);
     
 
     if (!plate || !manufacture || !model || !rentPerDay || !capacity || !description || !transmission || !type ||  !typeDriver || !year || !options || !specs || !available || !availableAt || !file) {
@@ -120,8 +118,6 @@ export class CarController {
 
       const rawOptions: string = req.body.options; // Misalnya, "['Option1', 'Option2']"
       const rawSpecs: string = req.body.specs; // Misalnya, "['Spec1', 'Spec2']"
-
-      console.log(req.body);
 
       // Menghapus tanda kutip dan mengonversi ke array
       const options = JSON.parse(rawOptions.replace(/'/g, '"'));
