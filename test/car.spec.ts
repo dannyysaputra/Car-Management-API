@@ -4,11 +4,16 @@ import request from 'supertest';
 import { CarController } from '../app/controllers/CarController';
 import upload from '../app/middleware/multer';
 import express from 'express';
-import knexInstance from "../database";
 import { Model } from 'objection';
 import { CarModel } from '../app/models/CarModel';
+import Knex from 'knex';
+import configs from '../knexfile';
 
 const app = express();
+const environment = process.env.NODE_ENV || 'development';
+const knexConfig = configs[environment];
+
+const knexInstance = Knex(knexConfig);
 Model.knex(knexInstance);
 
 app.use(express.json());
@@ -213,7 +218,6 @@ describe('Put /api/v1/cars/id', () => {
             .field('specs', car.specs)
             .set('Accept', 'application/json')
             .then((res: { statusCode: number; body: any; }) => {
-                // console.log(res.body);
                 expect(res.statusCode).toBe(201)
                 expect(res.body).toEqual(
                     expect.objectContaining({
@@ -253,7 +257,6 @@ describe('Put /api/v1/cars/id', () => {
             .put('/api/v1/cars/e76e884b-8f3e-4b90-a717-9239676d0100')
             .set('Accept', 'application/json')
             .then((res: { statusCode: number; body: any; }) => {
-                // console.log(res.body);
                 expect(res.statusCode).toBe(404)
                 expect(res.body).toEqual(
                     expect.objectContaining({
