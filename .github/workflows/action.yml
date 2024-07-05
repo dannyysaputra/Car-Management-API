@@ -19,6 +19,7 @@ jobs:
         - name: create env file
           run: |
             touch .env.test
+            echo DB_NAME=${{ secrets.DB_NAME }} >> .env.test
             echo DB_HOST=${{ secrets.DB_HOST }} >> .env.test
             echo DB_USER=${{ secrets.DB_USER }} >> .env.test
             echo DB_PASSWORD=${{ secrets.DB_PASSWORD }} >> .env.test
