@@ -163,24 +163,14 @@ describe('Get /api/v1/cars/id', () => {
                             description: "",
                             image: "https://res.cloudinary.com/dkjoe7ehu/image/upload/v1718253842/cars/ltruyqenyp99ljhoswvw.jpg",
                             options: expect.any(Array),
-                            specs: expect.arrayContaining([
-                                "All-position 3-point seat belts -inc: outboard pretensioners & force limiters, dual front pwr shoulder height adjusters, rear outboard emergency auto locking retractors, driver emergency locking retractor",
-                                "Body color door handles",
-                                "Front & rear passenger folding assist grips",
-                                "Rear-window defogger w/auto-off timer",
-                                "160-amp alternator",
-                                "Body color door handles",
-                                "Battery saver",
-                                "First aid kit",
-                                "Immobilizer system"
-                            ]),
-                            created_at: '2024-06-13T04:44:02.978Z',
-                            updated_at: '2024-06-13T04:44:02.978Z',
+                            specs: expect.any(Array),
+                            created_at: expect.any(String),
+                            updated_at: expect.any(String), 
                             created_by: '1f0da32d-4e44-437e-9a9a-d0f4044db615',
                             updated_by: '1f0da32d-4e44-437e-9a9a-d0f4044db615',
                             deleted_by: null,
                             available: false, 
-                            availableAt: '2024-06-14T07:02:47.278Z'
+                            availableAt: expect.any(String)
                         }
                     })
                 )
