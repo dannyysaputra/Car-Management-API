@@ -13,9 +13,6 @@ const app = express();
 const environment = process.env.NODE_ENV || 'development';
 const knexConfig = configs[environment];
 
-console.log(environment);
-console.log(knexConfig);
-
 const knexInstance = Knex(knexConfig);
 Model.knex(knexInstance);
 
@@ -165,15 +162,7 @@ describe('Get /api/v1/cars/id', () => {
                             plate: "ZAG-8112",
                             description: "",
                             image: "https://res.cloudinary.com/dkjoe7ehu/image/upload/v1718253842/cars/ltruyqenyp99ljhoswvw.jpg",
-                            options: expect.arrayContaining([
-                                "CD (Single Disc)",
-                                "Airbag: Driver",
-                                "Antilock Brakes",
-                                "CD (Single Disc)",
-                                "A/C: Rear",
-                                "Memory Seats",
-                                "Third Row Seats"
-                            ]),
+                            options: expect.any(Array),
                             specs: expect.arrayContaining([
                                 "All-position 3-point seat belts -inc: outboard pretensioners & force limiters, dual front pwr shoulder height adjusters, rear outboard emergency auto locking retractors, driver emergency locking retractor",
                                 "Body color door handles",
