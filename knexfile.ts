@@ -1,29 +1,69 @@
-require("dotenv").config()
 import type { Knex } from 'knex';
+import dotenv from 'dotenv';
+import path from 'path';
 
-const environments: string[] = ['development', 'staging', 'production'];
+// Tentukan path file .env berdasarkan environment
+const envPath = process.env.NODE_ENV === 'development' ? 
+  '.env' : `.env.${process.env.NODE_ENV}`
 
-const connection: Knex.ConnectionConfig = {
-    host: process.env.DB_HOST as string,
-    database: process.env.DB_NAME as string,
-    user: process.env.DB_USER as string,
-    password: process.env.DB_PASSWORD as string,
-};
+dotenv.config({ path: envPath });
 
 const commonConfig: Knex.Config = {
     client: 'pg',
-    connection, 
     pool: {
         min: 2,
         max: 10,
     },
     migrations: {
         tableName: 'knex_migrations',
-        directory: 'database/migrations'
+        directory: path.join(__dirname, 'database/migrations'),
     },
     seeds: {
-        directory: 'database/seeds'
+        directory: path.join(__dirname, 'database/seeds'),
     }
 };
 
-export default Object.fromEntries(environments.map((env: string) => [env, commonConfig]));
+const config: { [key: string]: Knex.Config } = {
+    development: {
+        ...commonConfig,
+        connection: {
+            host: process.env.DB_HOST,
+            database: process.env.DB_NAME,
+            user: process.env.DB_USER,
+            password: process.env.DB_PASSWORD,
+            port: Number(process.env.DB_PORT)
+        }
+    },
+    test: {
+        ...commonConfig,
+        connection: {
+            host: process.env.DB_HOST,
+            database: process.env.DB_NAME,
+            user: process.env.DB_USER,
+            password: process.env.DB_PASSWORD,
+            port: Number(process.env.DB_PORT)
+        }
+    },
+    staging: {
+        ...commonConfig,
+        connection: {
+            host: process.env.DB_HOST,
+            database: process.env.DB_NAME,
+            user: process.env.DB_USER,
+            password: process.env.DB_PASSWORD,
+            port: Number(process.env.DB_PORT)
+        }
+    },
+    production: {
+        ...commonConfig,
+        connection: {
+            host: process.env.DB_HOST,
+            database: process.env.DB_NAME,
+            user: process.env.DB_USER,
+            password: process.env.DB_PASSWORD,
+            port: Number(process.env.DB_PORT)
+        }
+    }
+};
+
+export default config;

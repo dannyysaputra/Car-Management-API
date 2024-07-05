@@ -495,6 +495,26 @@
                 }
               }
             },
+            "400": {
+              "description": "User already exists",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "object",
+                    "properties": {
+                      "status": {
+                        "type": "string",
+                        "example": "Failed"
+                      },
+                      "message": {
+                        "type": "string",
+                        "example": "User already exists"
+                      }
+                    }
+                  }
+                }
+              }
+            },
             "500": {
               "description": "Internal Server Error",
               "content": {
@@ -572,6 +592,10 @@
                           "name": {
                             "type": "string",
                             "example": "John Doe"
+                          },
+                          "role": {
+                            "type": "string",
+                            "example": "user"
                           },
                           "token": {
                             "type": "string",

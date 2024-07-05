@@ -13,6 +13,10 @@ export class CarService {
     return this.carRepository.getCars();
   }
 
+  public async getCarById(id: string): Promise<CarType | undefined> {
+    return this.carRepository.findCarById(id);
+  }
+
   public async createCar(data: Partial<CarType>, image: string, userId: string): Promise<CarType> {
     const carData = { ...data, image, created_by: userId, updated_by: userId };
     const newCar = await this.carRepository.createCar(carData);

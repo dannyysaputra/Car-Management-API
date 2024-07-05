@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 
@@ -5,24 +6,16 @@ const salt = 10;
 
 // register
 export async function encryptPassword(password: string) {
-    try {
-        const result = await bcrypt.hash(password, salt);
-        return result;
-    } catch (e) {
-        throw e;
-    }
+    const result = await bcrypt.hash(password, salt);
+    return result;
 }
 
 // login
 export async function checkPassword(encryptedPassword: string, password: string) {
-    try {
-        const result = await bcrypt.compare(password, encryptedPassword);
-        return result;
-    } catch (e) {
-        throw e;
-    }
+    const result = await bcrypt.compare(password, encryptedPassword);
+    return result;
 }
 
 export async function createToken(payload:any) {
-    return jwt.sign(payload, 'rahasia', {expiresIn: '1800s'});
+    return jwt.sign(payload, 'rahasia', {expiresIn: '86400s'});
 }

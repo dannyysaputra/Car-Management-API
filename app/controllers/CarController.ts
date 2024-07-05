@@ -1,6 +1,7 @@
 import { Request, Response } from 'express';
 import { CarService } from '../services/CarService';
 import cloudinary from '../middleware/cloudinary';
+import { CarType } from '../models/CarModel';
 
 const carService = new CarService();
 
@@ -15,13 +16,48 @@ export class CarController {
     }
   }
 
+  public static async getCarById(req: Request, res: Response): Promise<Response> {
+    const { id } = req.params;
+    try {
+      const cars = await carService.getCarById(id);
+      return res.status(200).json({  status: "Success", message: "Car found", data: cars });
+    } catch (error) {
+      return res.status(404).json({ status: 'Failed', message: "Internal Server Error" });
+    }
+  }
+
   public static async store(req: Request, res: Response): Promise<Response> {
-    const { name, price }: { name: string, price: number } = req.body;
+    const { 
+      plate, 
+      manufacture, 
+      model, 
+      rentPerDay, 
+      capacity, 
+      description, 
+      transmission, 
+      type, 
+      typeDriver, 
+      year, 
+      available,
+      availableAt 
+    }: CarType = req.body;
+
+    const rawOptions: string = req.body.options; // Misalnya, "['Option1', 'Option2']"
+    const rawSpecs: string = req.body.specs; // Misalnya, "['Spec1', 'Spec2']"
+
+    // Menghapus tanda kutip dan mengonversi ke array
+    const options = JSON.parse(rawOptions.replace(/'/g, '"'));
+    const specs = JSON.parse(rawSpecs.replace(/'/g, '"'));
+
     const file = req.file;
     const userId = req.user?.id;
 
-    if (!name || !price || !file) {
-      return res.status(400).json({ status: "Failed", message: 'Name, price, and image are required' });
+    // console.log('body: ', req.body);
+    // console.log('files: ', file);
+    
+
+    if (!plate || !manufacture || !model || !rentPerDay || !capacity || !description || !transmission || !type ||  !typeDriver || !year || !options || !specs || !available || !availableAt || !file) {
+      return res.status(400).json({ status: "Failed", message: 'All fields are required' });
     }
 
     try {
@@ -33,7 +69,23 @@ export class CarController {
         return res.status(500).json({ status: "Failed", message: 'Cannot retrieve image from Cloudinary' });
       }
 
-      const newCar = await carService.createCar({ name, price }, imageUrl, userId);
+      const newCar = await carService.createCar({ 
+        plate, 
+        manufacture, 
+        model, 
+        rentPerDay, 
+        capacity, 
+        description, 
+        transmission, 
+        type, 
+        typeDriver, 
+        year, 
+        options, 
+        specs, 
+        availableAt,
+        available
+      }, imageUrl, userId);
+
       return res.status(201).json({ status: "Success", message: 'Store car successfully', data: newCar });
     } catch (error) {
       console.error('Error storing car:', error);
@@ -43,11 +95,37 @@ export class CarController {
 
   public static async update(req: Request, res: Response): Promise<Response> {
     const { id } = req.params;
-    const { name, price }: { name: string, price: number } = req.body;
-    const file = req.file;
-    const userId = req.user?.id;
-
+    const { 
+      plate, 
+      manufacture, 
+      model, 
+      rentPerDay, 
+      capacity, 
+      description, 
+      transmission, 
+      type, 
+      typeDriver, 
+      year, 
+      availableAt 
+    }: CarType = req.body;
+    
     try {
+      const carExist = await carService.getCarById(id);
+      if (!carExist) {
+        return res.status(404).json({ status: "Failed", message: "Car not found" });  
+      }
+
+      const file = req.file;
+      const userId = req.user?.id;
+
+      const rawOptions: string = req.body.options; // Misalnya, "['Option1', 'Option2']"
+      const rawSpecs: string = req.body.specs; // Misalnya, "['Spec1', 'Spec2']"
+
+      console.log(req.body);
+
+      // Menghapus tanda kutip dan mengonversi ke array
+      const options = JSON.parse(rawOptions.replace(/'/g, '"'));
+      const specs = JSON.parse(rawSpecs.replace(/'/g, '"'));
       let imageUrl: string | undefined;
 
       if (file) {
@@ -60,11 +138,21 @@ export class CarController {
         }
       }
 
-      const car = await carService.updateCar(id, { name, price }, imageUrl, userId);
-
-      if (!car) {
-        return res.status(404).json({ status: "Failed", message: "Car not found" });  
-      }
+      const car = await carService.updateCar(id, { 
+        plate, 
+        manufacture, 
+        model, 
+        rentPerDay, 
+        capacity, 
+        description, 
+        transmission, 
+        type, 
+        typeDriver, 
+        year, 
+        options, 
+        specs, 
+        availableAt 
+      }, imageUrl, userId);
 
       return res.status(201).json({ status: "Success", message: "Car successfully updated", data: car });
     } catch (error) {
